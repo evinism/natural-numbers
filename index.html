@@ -7,7 +7,7 @@
       font-family: 'Proza Libre', sans-serif;
     }
 
-    .proof {
+    .generated-proof {
       position: absolute;
       height: 10px;
     }
@@ -18,12 +18,12 @@
     }
 
 
-    #quotes {
+    .proofs {
       position: relative;
       margin-left: 15px;
     }
 
-    h2 {
+    h3 {
       margin: 0;
       font-size: 20px;
     }
@@ -48,11 +48,11 @@
 
     function renderProof(row) {
       return `
-        <h2>Theorem 1.${row}:</h2>
+        <h3>Theorem 1.${row}:</h3>
         <p>
-          Let <b>${row + 1}</b> be <b>S(${row})</b>. <b>${row + 1}</b> is a natural number.
+          Let <b>${row}</b> be <b>S(${row})</b>. <b>${row + 1}</b> is a natural number.
         </p>
-        <h2>Proof 1.${row}:</h2>
+        <h3>Proof 1.${row}:</h3>
         <p>
           Since for every natural number <b>n</b>, <b>S(n)</b> is a natural number, and since <b>${row}</b> is a natural number, <b>${row + 1}</b> is a natural number.
         </p>
@@ -61,7 +61,7 @@
 
     function renderIndividual(row){
       return `
-        <div class='proof' style="top: ${row * rowHeight}px;">
+        <div class='proof generated-proof' style="top: ${row * rowHeight}px;">
           <p>
             ${renderProof(row)}
           </p>
@@ -77,13 +77,20 @@
       for(let i = startRow; i < endRow; i++){
         html += renderIndividual(i);
       }
-      $("#quotes").html(html);
+      $("#proofWrapper").html(html);
     }
 
     $(document).ready(render);
     $(window).scroll(render);
   </script>
-  <h1>Constructivist proof</h1>
-  <div id="quotes">
+  <h1>Natural numbers definition list:</h1>
+  <h2>A tool for people who think the natural numbers are cool but induction is dumb</h2>
+  <div class="proofs">
+    <div class="proof">
+      <h3>Axiom 1.0:</h3>
+      <p><b>0</b> is a natural number.</p>
+    </div>
+  </div>
+  <div class="proofs" id="proofWrapper">
   </div>
 </body>
