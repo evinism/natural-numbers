@@ -7,31 +7,32 @@
       font-family: 'Proza Libre', sans-serif;
     }
 
-    .quote {
+    .proof {
       position: absolute;
       height: 10px;
     }
 
-    .quote p {
+    .proof p {
       font-size: 20px;
-      margin: 3px 0px;
+      margin: 3px 0px 10px 20px;
     }
 
-    .quote span {
-      color: #aaaaaa;
-      font-weight: bold;
-    }
 
     #quotes {
       position: relative;
       margin-left: 15px;
     }
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+    }
   </style>
 </head>
 <body>
   <script>
-    const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ .!?'.split('');
-    const rowHeight = 70;
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz .!?'.split('');
+    const rowHeight = 140;
 
     function toBase(num, base, minSize) {
       accum = [];
@@ -45,21 +46,27 @@
       return accum;
     };
 
-    function rowToQuote (row) {
-      row += 1;
-      const numOfLetters = Math.ceil(Math.log(row + 1) / Math.log(alphabet.length));
-      const stringIndex = row - alphabet.length**(numOfLetters - 1);
-      let baseArr = toBase(stringIndex, alphabet.length, numOfLetters);
-      return baseArr.map(i => alphabet[i]).join('');
+    function renderProof(row) {
+      return `
+        <h2>Theorem 1.${row}:</h2>
+        <p>
+          Let <b>${row + 1}</b> be <b>S(${row})</b>. <b>${row + 1}</b> is a natural number.
+        </p>
+        <h2>Proof 1.${row}:</h2>
+        <p>
+          Since for every natural number <b>n</b>, <b>S(n)</b> is a natural number, and since <b>${row}</b> is a natural number, <b>${row + 1}</b> is a natural number.
+        </p>
+      `;
     }
 
     function renderIndividual(row){
       return `
-        <div class='quote' style="top: ${row * rowHeight}px;">
-          <p>&ldquo;${rowToQuote(row)}&rdquo;</p>
-          <span>&horbar; Evin Sellin</span>
+        <div class='proof' style="top: ${row * rowHeight}px;">
+          <p>
+            ${renderProof(row)}
+          </p>
         </div>
-      `
+      `;
     }
 
     function render(){
@@ -76,7 +83,7 @@
     $(document).ready(render);
     $(window).scroll(render);
   </script>
-  <h1>My Very Best Quotes</h1>
+  <h1>Constructivist proof</h1>
   <div id="quotes">
   </div>
 </body>
